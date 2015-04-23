@@ -37,6 +37,11 @@ abstract class Entry implements EntryInterface
     protected $alias;
 
     /**
+     * @var string
+     */
+    protected $description;
+
+    /**
      * @var \Doctrine\Common\Collections\Collection
      */
     protected $translations;
@@ -125,6 +130,23 @@ abstract class Entry implements EntryInterface
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+        return $this;
+    }
+
+        /**
      * {@inheritdoc}
      */
     public function addTranslation(TranslationInterface $translation)

@@ -29,6 +29,10 @@
                name="alias"
                type="string"/>
 
+        <field fieldName="description"
+               name="description"
+               type="string"/>
+        
         <reference-many target-document="ServerGrove\Bundle\TranslationEditorBundle\Document\Translation" 
                         field="translations"
                         mapped-by="entry">

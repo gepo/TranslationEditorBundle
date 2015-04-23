@@ -27,6 +27,12 @@ class EditorController extends Controller
         // Retrieving mandatory information
         $localeList = $storageService->findLocaleList();
         $entryList  = $storageService->findEntryList();
+        usort($entryList, function($a, $b) {
+            if ($a->getAlias() < $b->getAlias()) {
+                return -1;
+            }
+            return 1;
+        });
 
         // Processing registered bundles
         $bundleList = array_filter(
@@ -190,6 +196,51 @@ class EditorController extends Controller
             $result = array(
                 'result'  => true,
                 'message' => 'Translation updated successfully.'
+            );
+        } catch (\Exception $e) {
+            $result = array(
+                'result'  => false,
+                'message' => $e->getMessage()
+            );
+        }
+
+        return new Response(json_encode($result), 200, array(
+            'Content-type' => 'application/json'
+        ));
+    }
+
+    /**
+     * Update Entry description
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function updateTranslationDescAction()
+    {
+        $storageService = $this->container->get('server_grove_translation_editor.storage');
+        $request        = $this->getRequest();
+
+        if ( ! $request->isXmlHttpRequest()) {
+            return new RedirectResponse($this->generateUrl('sg_localeditor_index'));
+        }
+
+        $value = $request->request->get('value');
+
+        $entryList  = $storageService->findEntryList(array('id' => $request->request->get('entryId')));
+        $entry      = reset($entryList);
+
+        if (! $entry) {
+            throw new $this->createNotFoundException();
+        }
+
+        try {
+            $entry->setDescription($value);
+
+            $storageService->persist($entry);
+            $storageService->flush();
+
+            $result = array(
+                'result'  => true,
+                'message' => 'Description updated successfully.'
             );
         } catch (\Exception $e) {
             $result = array(

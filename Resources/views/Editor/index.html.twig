@@ -325,7 +325,7 @@
                     {% set translation = entry.getTranslation(locale) %}
 
                     <div class="translation" id="current-{{loop.parent.loop.index}}-{{locale}}-content" onclick="showTranslationEditForm('{{loop.parent.loop.index}}-{{locale}}')">
-                        {% if translation %}{{ translation.getValue() }}{% endif %}
+                        {% if translation %}{{ translation.getValue()|raw }}{% endif %}
                     </div>
 
                     {% if defaultLocale and locale != defaultLocale and translation and defaultLocale.getTranslation(entry) and translation.getValue() == defaultLocale.getTranslation(entry).getValue() %}
@@ -339,7 +339,7 @@
 
                 <div id="editor-{{loop.parent.loop.index}}-{{locale}}" class="editor">
                     <div class="form-group">
-                        <textarea class="form-control">{% if translation %}{{ translation.getValue() }}{% endif %}</textarea>
+                        <textarea class="form-control">{% if translation %}{{ translation.getValue()|raw }}{% endif %}</textarea>
                     </div>
                     <input id="save-{{loop.parent.loop.index}}-{{locale}}"class="btn btn-sm btn-primary" type="button" value="Save" onclick="saveTranslation('{{loop.parent.loop.index}}-{{locale}}', '{{entry.getId()}}', '{{locale.getId()}}')">
                     <input class="btn btn-sm btn-danger" type="button" value="Cancel" onclick="hideTranslationEditForm('{{loop.parent.loop.index}}-{{locale}}')">

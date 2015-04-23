@@ -6,6 +6,10 @@ sg_localeditor_update_translation:
     pattern:  /update-translation
     defaults: { _controller: ServerGroveTranslationEditorBundle:Editor:updateTranslation }
 
+sg_localeditor_update_translation_desc:
+    pattern:  /translations/update-translation-desc
+    defaults: { _controller: ServerGroveTranslationEditorBundle:Editor:updateTranslationDesc }
+    
 sg_localeditor_add_translation:
     pattern:  /add-translation
     defaults: { _controller: ServerGroveTranslationEditorBundle:Editor:addTranslation }

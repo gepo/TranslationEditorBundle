@@ -66,6 +66,20 @@ interface EntryInterface
     public function setAlias($alias);
 
     /**
+     * Retrieve the Entry description
+     *
+     * @return string
+     */
+    public function getDescription();
+
+    /**
+     * Define the Entry description
+     *
+     * @param string $alias
+     */
+    public function setDescription($description);
+
+    /**
      * Append an Entry translation
      *
      * @param TranslationInterface $translation

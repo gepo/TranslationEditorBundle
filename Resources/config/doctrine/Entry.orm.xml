@@ -31,7 +31,11 @@
         <field name="alias"
                column="alias"
                type="string"/>
-
+        
+        <field name="description"
+               column="description"
+               type="string"/>
+        
         <one-to-many target-entity="ServerGrove\Bundle\TranslationEditorBundle\Entity\Translation"
                      field="translations"
                      mapped-by="entry"
