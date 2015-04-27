@@ -74,7 +74,7 @@ class MongoDBStorage extends AbstractStorage implements StorageInterface
         if(isset($criteria['entry']) && $criteria['entry'] instanceof \ServerGrove\Bundle\TranslationEditorBundle\Document\Entry) {
             $criteria['entry'] = $criteria['entry']->getId();
         }
-        
+
         $this->hydrateCriteria($builder, $criteria);
 
         return iterator_to_array($builder->getQuery()->execute());
@@ -89,7 +89,8 @@ class MongoDBStorage extends AbstractStorage implements StorageInterface
     protected function hydrateCriteria($builder, array $criteria = array())
     {
         foreach ($criteria as $fieldName => $fieldValue) {
-            $builder->addOr($builder->expr()->field($fieldName)->equals($fieldValue));
+            $builder->field($fieldName)->equals($fieldValue);
+//            $builder->addOr($builder->expr()->field($fieldName)->equals($fieldValue));
         }
     }
 }
