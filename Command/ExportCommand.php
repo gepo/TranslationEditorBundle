@@ -9,6 +9,8 @@ use Symfony\Component\Console\Input\InputArgument,
     Symfony\Component\Translation\MessageCatalogue;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use ServerGrove\Bundle\TranslationEditorBundle\Storage\StorageInterface;
+use ServerGrove\Bundle\TranslationEditorBundle\Model\TranslationInterface;
 
 /**
  * Command for exporting translations into files
@@ -17,6 +19,11 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class ExportCommand extends AbstractCommand
 {
+    /**
+     * @var StorageInterface
+     */
+    private $storageService;
+
     /**
      * {@inheritdoc}
      */
@@ -40,6 +47,7 @@ class ExportCommand extends AbstractCommand
     {
         $this->input  = $input;
         $this->output = $output;
+        $this->storageService = $this->getContainer()->get('server_grove_translation_editor.storage');
 
         // Locales scanning
         $this->output->write('Scanning for locales... ');
@@ -169,6 +177,7 @@ class ExportCommand extends AbstractCommand
                 $catalogue->set($translation->getEntry()->getAlias(), $translation->getValue(), $translation->getEntry()->getFilename());
             }
 
+
             $writer->writeTranslations($catalogue, $translation->getEntry()->getFormat(), array('path' => dirname($filePath)));
 
             $this->output->writeln('<info>DONE</info>');
@@ -194,9 +203,7 @@ class ExportCommand extends AbstractCommand
             $criteria['country']  = $filterLocaleInfo['country'];
         }
 
-        $storageService = $this->getContainer()->get('server_grove_translation_editor.storage');
-
-        return $storageService->findLocaleList($criteria);
+        return $this->storageService->findLocaleList($criteria);
     }
 
     /**
@@ -217,8 +224,7 @@ class ExportCommand extends AbstractCommand
         }
 
         // Search for bundle entries
-        $storageService = $this->getContainer()->get('server_grove_translation_editor.storage');
-        $entryList      = $storageService->findEntryList($criteria);
+        $entryList      = $this->storageService->findEntryList($criteria);
 
         return $entryList;
     }
@@ -236,17 +242,19 @@ class ExportCommand extends AbstractCommand
         $translationList = array();
 
         foreach ($entryList as $entry) {
-            $translation = $entry->getTranslations()->filter(
+            $translations = $entry->getTranslations()->filter(
                 function ($item) use ($locale) {
                     return ($item->getLocale() === $locale);
                 }
-            );
+            )->toArray();
 
-            if (count($translation) !== 1) continue;
+            $translation = array_shift($translations);
 
-            $translationValues = $translation->getValues();
+            if (count($translations) > 0) {
+                $this->removeExtra($translations);
+            }
 
-            $translationList[] = reset($translationValues);
+            $translationList[] = $translation;
         }
 
         return array_filter($translationList);
@@ -274,5 +282,13 @@ class ExportCommand extends AbstractCommand
         }
 
         return $translationFileList;
+    }
+
+    protected function removeExtra(array $elements)
+    {
+        foreach ($elements as $elem) {
+            /* @var $elem TranslationInterface */
+            $this->storageService->removeTranslation($elem);
+        }
     }
 }

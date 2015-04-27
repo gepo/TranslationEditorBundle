@@ -3,6 +3,7 @@
 namespace ServerGrove\Bundle\TranslationEditorBundle\Storage;
 
 use Doctrine\Common\Persistence\ObjectManager;
+use ServerGrove\Bundle\TranslationEditorBundle\Model\TranslationInterface;
 
 /**
  * Doctrine ORM Storage
@@ -94,6 +95,13 @@ abstract class AbstractStorage
     public function deleteTranslation($id)
     {
         return $this->delete($this->getTranslationClassName(), $id);
+    }
+
+    public function removeTranslation(TranslationInterface $translation)
+    {
+        $translation->getEntry()->getTranslations()->removeElement($translation);
+        $this->manager->remove($translation);
+        $this->manager->flush();
     }
 
     /**
