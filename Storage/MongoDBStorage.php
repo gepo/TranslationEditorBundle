@@ -69,13 +69,11 @@ class MongoDBStorage extends AbstractStorage implements StorageInterface
         $builder = $this->manager->createQueryBuilder($this->getTranslationClassName());
 
         if(isset($criteria['locale']) && $criteria['locale'] instanceof \ServerGrove\Bundle\TranslationEditorBundle\Document\Locale) {
-            $criteria['locale'] = $criteria['locale']->getId();
+            $builder->field('locale.$id')->equals(new \MongoId($criteria['locale']->getId()));
         }
         if(isset($criteria['entry']) && $criteria['entry'] instanceof \ServerGrove\Bundle\TranslationEditorBundle\Document\Entry) {
-            $criteria['entry'] = $criteria['entry']->getId();
+            $builder->field('entry.$id')->equals(new \MongoId($criteria['entry']->getId()));
         }
-
-        $this->hydrateCriteria($builder, $criteria);
 
         return iterator_to_array($builder->getQuery()->execute());
     }
