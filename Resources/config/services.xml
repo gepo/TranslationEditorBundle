@@ -23,5 +23,11 @@
             <argument>%server_grove_translation_editor.storage.manager%</argument>
         </service>
 
+        <service id="server_grove_translation_editor.translator" class="ServerGrove\Bundle\TranslationEditorBundle\Translation\Translator">
+            <argument type="service" id="server_grove_translation_editor.storage"/>
+            <argument type="service" id="translator.selector"/>
+            <argument type="collection" />
+            <argument type="collection" />
+        </service>
     </services>
 </container>

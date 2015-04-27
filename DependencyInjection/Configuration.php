@@ -36,6 +36,7 @@ class Configuration implements ConfigurationInterface
                     ->end()
                 ->end()
                 ->scalarNode('root_dir')->defaultValue('%kernel.root_dir%/../src')->end()
+                ->scalarNode('override_translator')->defaultValue(false)->end()
             ->end();
 
         return $treeBuilder;
