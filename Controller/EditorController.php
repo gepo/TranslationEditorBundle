@@ -4,7 +4,8 @@ namespace ServerGrove\Bundle\TranslationEditorBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller,
     Symfony\Component\HttpFoundation\RedirectResponse,
-    Symfony\Component\HttpFoundation\Response;
+    Symfony\Component\HttpFoundation\Response,
+    Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * Editor Controller
@@ -90,9 +91,7 @@ class EditorController extends Controller
             );
         }
 
-        return new Response(json_encode($result), 200, array(
-            'Content-type' => 'application/json'
-        ));
+        return new JsonResponse($result);
     }
 
     /**
@@ -154,7 +153,7 @@ class EditorController extends Controller
             'message' => 'New translation added successfully. Reload list for completion.'
         );
 
-        return new Response(json_encode($result));
+        return new JsonResponse($result);
     }
 
     /**
@@ -204,9 +203,7 @@ class EditorController extends Controller
             );
         }
 
-        return new Response(json_encode($result), 200, array(
-            'Content-type' => 'application/json'
-        ));
+        return new JsonResponse($result);
     }
 
     /**
@@ -249,9 +246,7 @@ class EditorController extends Controller
             );
         }
 
-        return new Response(json_encode($result), 200, array(
-            'Content-type' => 'application/json'
-        ));
+        return new JsonResponse($result);
     }
 
     /**
@@ -282,9 +277,7 @@ class EditorController extends Controller
             );
         }
 
-        return new Response(json_encode($result), 200, array(
-            'Content-type' => 'application/json'
-        ));
+        return new JsonResponse($result);
     }
 
     /**
@@ -326,8 +319,6 @@ class EditorController extends Controller
             return new RedirectResponse($this->generateUrl('sg_localeditor_index'));
         }
 
-        return new Response(json_encode($result), 200, array(
-            'Content-type' => 'application/json'
-        ));
+        return new JsonResponse($result);
     }
 }
