@@ -17,8 +17,11 @@ class ServerGroveTranslationEditorExtension extends \Symfony\Component\HttpKerne
         $configuration = new Configuration();
         $config        = $this->processConfiguration($configuration, $configs);
 
-        $container->setParameter($this->getAlias() . '.storage.type', $config['storage']['type']);
-        $container->setParameter($this->getAlias() . '.storage.manager', $config['storage']['manager']);
+        $loader->load(sprintf('%s.xml', $config['storage']['type']));
+
+        $container->setAlias($this->getAlias() . '.storage', 'server_grove_translation_editor.storage.' . $config['storage']['type']);
+        $container->setAlias($this->getAlias() . '.storage.manager', $config['storage']['manager']);
+
         $container->setParameter($this->getAlias() . '.root_dir', $config['root_dir']);
         $container->setParameter($this->getAlias() . '.override_translator', $config['override_translator']);
     }

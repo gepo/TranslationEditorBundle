@@ -20,11 +20,17 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('server_grove_translation_editor');
 
+        $supportedTypes = array('orm', 'mongodb');
+
         $rootNode
             ->children()
                 ->arrayNode('storage')
                     ->children()
                         ->scalarNode('type')
+                            ->validate()
+                                ->ifNotInArray($supportedTypes)
+                                ->thenInvalid('The driver %s is not supported. Please choose one of '.json_encode($supportedTypes))
+                            ->end()
                             ->cannotBeOverwritten()
                             ->isRequired()
                             ->cannotBeEmpty()

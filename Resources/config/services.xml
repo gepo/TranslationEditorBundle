@@ -6,28 +6,12 @@
 
     <services>
 
-        <!-- Storage services -->
-        <service id="server_grove_translation_editor.storage" factory-method="get" factory-service="service_container" class="ServerGrove\Bundle\TranslationEditorBundle\Storage\StorageInterface">
-            <argument>%server_grove_translation_editor.storage.type%</argument>
-        </service>
-
-        <service id="server_grove_translation_editor.storage.orm" class="ServerGrove\Bundle\TranslationEditorBundle\Storage\ORMStorage">
-            <argument type="service" id="server_grove_translation_editor.storage.manager"/>
-        </service>
-        
-        <service id="server_grove_translation_editor.storage.mongodb" class="ServerGrove\Bundle\TranslationEditorBundle\Storage\MongoDBStorage">
-            <argument type="service" id="server_grove_translation_editor.storage.manager"/>
-        </service>
-
-        <service id="server_grove_translation_editor.storage.manager" factory-method="get" factory-service="service_container" class="Doctrine\Common\Persistence\ObjectManager" public="false">
-            <argument>%server_grove_translation_editor.storage.manager%</argument>
-        </service>
-
         <service id="server_grove_translation_editor.translator" class="ServerGrove\Bundle\TranslationEditorBundle\Translation\Translator">
             <argument type="service" id="server_grove_translation_editor.storage"/>
             <argument type="service" id="translator.selector"/>
             <argument type="collection" />
             <argument type="collection" />
         </service>
+
     </services>
 </container>
