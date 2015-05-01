@@ -4,7 +4,7 @@
                 xsi:schemaLocation="http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping
                 http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping.xsd">
 
-    <document name="ServerGrove\Bundle\TranslationEditorBundle\Document\Translation"
+    <document name="ServerGrove\Bundle\TranslationEditorBundle\Model\Translation"
             table="sg_translation_entry">
 
         <field fieldName="id"
@@ -18,7 +18,7 @@
                type="string"/>
         
 
-        <reference-one target-document="ServerGrove\Bundle\TranslationEditorBundle\Document\Entry" 
+        <reference-one target-document="ServerGrove\Bundle\TranslationEditorBundle\Model\Entry" 
                         field="entry">
             <cascade>
                 <persist />
@@ -26,7 +26,7 @@
             </cascade>
         </reference-one>
 
-        <reference-one target-document="ServerGrove\Bundle\TranslationEditorBundle\Document\Locale" 
+        <reference-one target-document="ServerGrove\Bundle\TranslationEditorBundle\Model\Locale" 
                         field="locale">
             <cascade>
                 <persist />

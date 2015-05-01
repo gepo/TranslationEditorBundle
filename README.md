@@ -66,14 +66,14 @@ A sample Doctrine ORM configuration (in your config_dev.yml):
     server_grove_translation_editor:
       storage:
         type: server_grove_translation_editor.storage.orm
-        manager: doctrine.orm.entity_manager
+        manager: default
 
 Doctrine MongoDB configuration (in your config_dev.yml):
 
     server_grove_translation_editor:
       storage:
         type: server_grove_translation_editor.storage.mongodb
-        manager: doctrine_mongodb.odm.document_manager
+        manager: default
 
 Add the routing configuration to app/config/routing_dev.yml
 

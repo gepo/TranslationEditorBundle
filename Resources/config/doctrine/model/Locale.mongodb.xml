@@ -4,7 +4,7 @@
                 xsi:schemaLocation="http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping
                 http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping.xsd">
 
-    <document name="ServerGrove\Bundle\TranslationEditorBundle\Document\Locale"
+    <document name="ServerGrove\Bundle\TranslationEditorBundle\Model\Locale"
             table="sg_translation_entry">
 
         <field fieldName="id"
@@ -28,7 +28,7 @@
                type="boolean"/>
    
 
-        <reference-many target-document="ServerGrove\Bundle\TranslationEditorBundle\Document\Translation" 
+        <reference-many target-document="ServerGrove\Bundle\TranslationEditorBundle\Model\Translation" 
                         field="translations"
                         mapped-by="locale">
             <cascade>

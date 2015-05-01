@@ -2,6 +2,8 @@
 
 namespace ServerGrove\Bundle\TranslationEditorBundle\Storage;
 
+use ServerGrove\Bundle\TranslationEditorBundle\Model\Locale;
+use ServerGrove\Bundle\TranslationEditorBundle\Model\Entry;
 /**
  * Doctrine MongoDB Storage
  *
@@ -9,9 +11,14 @@ namespace ServerGrove\Bundle\TranslationEditorBundle\Storage;
  */
 class MongoDBStorage extends AbstractStorage implements StorageInterface
 {
-    const CLASS_LOCALE      = 'ServerGrove\Bundle\TranslationEditorBundle\Document\Locale';
-    const CLASS_ENTRY       = 'ServerGrove\Bundle\TranslationEditorBundle\Document\Entry';
-    const CLASS_TRANSLATION = 'ServerGrove\Bundle\TranslationEditorBundle\Document\Translation';
+    const CLASS_LOCALE      = 'ServerGroveBundleTranslationEditorBundle:Locale';
+    const CLASS_ENTRY       = 'ServerGroveBundleTranslationEditorBundle:Entry';
+    const CLASS_TRANSLATION = 'ServerGroveBundleTranslationEditorBundle:Translation';
+    /*
+    const CLASS_LOCALE      = 'ServerGrove\Bundle\TranslationEditorBundle\Model\Locale';
+    const CLASS_ENTRY       = 'ServerGrove\Bundle\TranslationEditorBundle\Model\Entry';
+    const CLASS_TRANSLATION = 'ServerGrove\Bundle\TranslationEditorBundle\Model\Translation';
+     */
 
     /**
      * {@inheritdoc}
@@ -56,7 +63,7 @@ class MongoDBStorage extends AbstractStorage implements StorageInterface
     {
         $builder = $this->manager->createQueryBuilder($this->getEntryClassName());
 
-        if(isset($criteria['locale']) && $criteria['locale'] instanceof \ServerGrove\Bundle\TranslationEditorBundle\Document\Locale) {
+        if(isset($criteria['locale']) && $criteria['locale'] instanceof Locale) {
             $builder->field('locale.$id')->equals(new \MongoId($criteria['locale']->getId()));
             unset($criteria['locale']);
         }
@@ -73,10 +80,10 @@ class MongoDBStorage extends AbstractStorage implements StorageInterface
     {
         $builder = $this->manager->createQueryBuilder($this->getTranslationClassName());
 
-        if(isset($criteria['locale']) && $criteria['locale'] instanceof \ServerGrove\Bundle\TranslationEditorBundle\Document\Locale) {
+        if(isset($criteria['locale']) && $criteria['locale'] instanceof Locale) {
             $builder->field('locale.$id')->equals(new \MongoId($criteria['locale']->getId()));
         }
-        if(isset($criteria['entry']) && $criteria['entry'] instanceof \ServerGrove\Bundle\TranslationEditorBundle\Document\Entry) {
+        if(isset($criteria['entry']) && $criteria['entry'] instanceof Entry) {
             $builder->field('entry.$id')->equals(new \MongoId($criteria['entry']->getId()));
         }
 

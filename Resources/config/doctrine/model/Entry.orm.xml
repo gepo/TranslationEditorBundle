@@ -4,8 +4,8 @@
                   xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
                                       http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
 
-    <entity name="ServerGrove\Bundle\TranslationEditorBundle\Entity\Locale"
-            table="sg_translation_locale">
+    <entity name="ServerGrove\Bundle\TranslationEditorBundle\Model\Entry"
+            table="sg_translation_entry">
 
         <id name="id"
             type="integer"
@@ -13,24 +13,32 @@
             <generator strategy="AUTO"/>
         </id>
 
-        <field name="language"
-               column="language"
+        <field name="domain"
+               column="domain"
                type="string"
-               length="2"/>
+               length="50"/>
 
-        <field name="country"
-               column="country"
+        <field name="fileName"
+               column="file_name"
                type="string"
-               length="2"
-               nullable="true"/>
+               length="50"/>
 
-        <field name="active"
-               column="active"
-               type="boolean"/>
+        <field name="format"
+               column="format"
+               type="string"
+               length="5"/>
 
-        <one-to-many target-entity="ServerGrove\Bundle\TranslationEditorBundle\Entity\Translation"
+        <field name="alias"
+               column="alias"
+               type="string"/>
+        
+        <field name="description"
+               column="description"
+               type="string"/>
+        
+        <one-to-many target-entity="ServerGrove\Bundle\TranslationEditorBundle\Model\Translation"
                      field="translations"
-                     mapped-by="locale"
+                     mapped-by="entry"
                      fetch="EXTRA_LAZY">
             <cascade>
                 <cascade-all/>

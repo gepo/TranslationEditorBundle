@@ -9,7 +9,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  *
  * @author Guilherme Blanco <guilhermeblanco@hotmail.com>
  */
-abstract class Entry implements EntryInterface
+class Entry implements EntryInterface
 {
     /**
      * @var integer

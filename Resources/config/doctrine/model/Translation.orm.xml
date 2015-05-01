@@ -4,7 +4,7 @@
                   xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
                                       http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
 
-    <entity name="ServerGrove\Bundle\TranslationEditorBundle\Entity\Translation"
+    <entity name="ServerGrove\Bundle\TranslationEditorBundle\Model\Translation"
             table="sg_translation_value">
 
         <id name="id"
@@ -17,7 +17,7 @@
                column="value"
                type="text"/>
 
-        <many-to-one target-entity="ServerGrove\Bundle\TranslationEditorBundle\Entity\Entry"
+        <many-to-one target-entity="ServerGrove\Bundle\TranslationEditorBundle\Model\Entry"
                      field="entry"
                      inversed-by="translations">
             <cascade>
@@ -26,7 +26,7 @@
             </cascade>
         </many-to-one>
 
-        <many-to-one target-entity="ServerGrove\Bundle\TranslationEditorBundle\Entity\Locale"
+        <many-to-one target-entity="ServerGrove\Bundle\TranslationEditorBundle\Model\Locale"
                      field="locale"
                      inversed-by="translations">
             <cascade>

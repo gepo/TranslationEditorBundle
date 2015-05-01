@@ -9,7 +9,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  *
  * @author Guilherme Blanco <guilhermeblanco@hotmail.com>
  */
-abstract class Locale implements LocaleInterface
+class Locale implements LocaleInterface
 {
     /**
      * @var integer
