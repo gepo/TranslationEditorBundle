@@ -2,17 +2,15 @@
 
 namespace ServerGrove\Bundle\TranslationEditorBundle\Command;
 
-use Symfony\Component\Console\Input\InputArgument,
-    Symfony\Component\Console\Input\InputInterface,
-    Symfony\Component\Console\Input\InputOption,
-    Symfony\Component\Console\Output\OutputInterface,
-    Symfony\Component\Finder\Finder,
-    Symfony\Component\Translation\MessageCatalogue;
-
-use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Finder\Finder;
+use Symfony\Component\Translation\MessageCatalogue;
+use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /**
- * Command for importing translation files
+ * Command for importing translation files.
  *
  * @author Guilherme Blanco <guilhermeblanco@hotmail.com>
  * @author Juti Noppornpitak <jnopporn@shiroyuki.com>
@@ -51,7 +49,7 @@ class ImportCommand extends AbstractCommand
 
         $this->output->writeln(sprintf('found "<info>%s</info>" item(s).', $bundleListCount));
 
-        if ( ! $bundleListCount) {
+        if (!$bundleListCount) {
             $this->output->writeln('No bundles to be processed.');
 
             return;
@@ -70,9 +68,9 @@ class ImportCommand extends AbstractCommand
     }
 
     /**
-     * Import a Bundle
+     * Import a Bundle.
      *
-     * @param \Symfony\Component\HttpKernel\Bundle\Bundle $bundle
+     * @param Bundle $bundle
      */
     protected function importBundle($bundle)
     {
@@ -88,7 +86,7 @@ class ImportCommand extends AbstractCommand
 
         $this->output->writeln(sprintf('found "<info>%s</info>" item(s).', $translationFileListCount));
 
-        if ( ! $translationFileListCount) {
+        if (!$translationFileListCount) {
             $this->output->writeln('  No translation files to be processed.');
 
             return;
@@ -104,7 +102,7 @@ class ImportCommand extends AbstractCommand
             // Get or create locale
             $localeList = $storage->findLocaleList(array(
                 'language' => $propertyList['language'],
-                'country'  => $propertyList['country']
+                'country'  => $propertyList['country'],
             ));
 
             if (null === $locale = array_shift($localeList)) {
@@ -114,7 +112,7 @@ class ImportCommand extends AbstractCommand
             // Import translation
             $entryList = $storage->findEntryList(array(
                 'domain'   => $bundle->getName(),
-                'fileName' => $propertyList['name']
+                'fileName' => $propertyList['name'],
             ));
 
             $catalogue = new MessageCatalogue($locale);
@@ -123,8 +121,8 @@ class ImportCommand extends AbstractCommand
 
             foreach ($catalogue->all($propertyList['name']) as $alias => $value) {
                 // Avoid error on empty value
-                if($value === null) {
-                    $this->output->writeln("\n    <error>Warning: Empty value on ".$alias."</error>" );
+                if ($value === null) {
+                    $this->output->writeln("\n    <error>Warning: Empty value on ".$alias.'</error>');
                     continue;
                 }
                 // Get or create entry
@@ -164,9 +162,9 @@ class ImportCommand extends AbstractCommand
     }
 
     /**
-     * Retrieve the list of translation files of a given Bundle
+     * Retrieve the list of translation files of a given Bundle.
      *
-     * @param \Symfony\Component\HttpKernel\Bundle\Bundle $bundle
+     * @param Bundle $bundle
      * @param string $filterLocaleName
      * @param string $filterFileName
      *
@@ -175,11 +173,11 @@ class ImportCommand extends AbstractCommand
     protected function getTranslationFileList($bundle, $filterLocaleName = null, $filterFileName = null)
     {
         // Building translation directory
-        $translationPath = $bundle->getPath() . DIRECTORY_SEPARATOR . self::TRANSLATION_PATH;
+        $translationPath = $bundle->getPath().DIRECTORY_SEPARATOR.self::TRANSLATION_PATH;
         $translationFiles = array();
 
         // If directory not found, return
-        if ( ! file_exists($translationPath)) {
+        if (!file_exists($translationPath)) {
             return $translationFiles;
         }
 
@@ -205,7 +203,7 @@ class ImportCommand extends AbstractCommand
                 'name'     => $name,
                 'language' => $language,
                 'country'  => $country,
-                'type'     => $type
+                'type'     => $type,
             );
         }
 

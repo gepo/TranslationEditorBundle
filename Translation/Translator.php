@@ -5,9 +5,7 @@ namespace ServerGrove\Bundle\TranslationEditorBundle\Translation;
 use Symfony\Component\Translation\Translator as BaseTranslator;
 use Symfony\Component\Translation\MessageSelector;
 use Symfony\Component\Translation\MessageCatalogue;
-
 use ServerGrove\Bundle\TranslationEditorBundle\Storage\StorageInterface;
-use ServerGrove\Bundle\TranslationEditorBundle\Model\EntryInterface;
 use ServerGrove\Bundle\TranslationEditorBundle\Model\LocaleInterface;
 use ServerGrove\Bundle\TranslationEditorBundle\Model\TranslationInterface;
 
@@ -18,7 +16,7 @@ class Translator extends BaseTranslator
 
     public function __construct(StorageInterface $storage, MessageSelector $selector, $loaderIds = array(), array $options = array())
     {
-        parent::__construct("en_US", $selector, $loaderIds, $options);
+        parent::__construct('en_US', $selector, $loaderIds, $options);
 
         $this->storage = $storage;
         $this->initialize();
@@ -30,7 +28,7 @@ class Translator extends BaseTranslator
 
         foreach ($this->storage->findLocaleList() as $locale) {
             /* @var $locale LocaleInterface */
-            $this->locales[$locale->getLanguage() . '_' . $locale->getCountry()] = $locale;
+            $this->locales[$locale->getLanguage().'_'.$locale->getCountry()] = $locale;
         }
     }
 
@@ -137,7 +135,7 @@ class Translator extends BaseTranslator
         }
 
         if (!isset($this->locales[$locale])) {
-            return null;
+            return;
         }
 
         if (!isset($this->catalogues[$locale])) {
@@ -181,7 +179,7 @@ class Translator extends BaseTranslator
             /* @var $translation TranslationInterface */
             $domain = $translation->getEntry()->getFileName();
 
-            if (! isset($messagesData[$domain])) {
+            if (!isset($messagesData[$domain])) {
                 $messagesData[$domain] = array();
             }
 

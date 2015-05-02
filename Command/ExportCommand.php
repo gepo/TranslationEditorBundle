@@ -2,18 +2,17 @@
 
 namespace ServerGrove\Bundle\TranslationEditorBundle\Command;
 
-use Symfony\Component\Console\Input\InputArgument,
-    Symfony\Component\Console\Input\InputInterface,
-    Symfony\Component\Console\Input\InputOption,
-    Symfony\Component\Console\Output\OutputInterface,
-    Symfony\Component\Translation\MessageCatalogue;
-
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Translation\MessageCatalogue;
+use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Doctrine\Common\Collections\ArrayCollection;
 use ServerGrove\Bundle\TranslationEditorBundle\Storage\StorageInterface;
 use ServerGrove\Bundle\TranslationEditorBundle\Model\TranslationInterface;
 
 /**
- * Command for exporting translations into files
+ * Command for exporting translations into files.
  *
  * @author Guilherme Blanco <guilhermeblanco@hotmail.com>
  */
@@ -57,7 +56,7 @@ class ExportCommand extends AbstractCommand
 
         $this->output->writeln(sprintf('found "<info>%s</info>" item(s).', $localeListCount));
 
-        if ( ! $localeListCount) {
+        if (!$localeListCount) {
             $this->output->writeln('  No locales to be processed.');
 
             return;
@@ -71,7 +70,7 @@ class ExportCommand extends AbstractCommand
 
         $this->output->writeln(sprintf('found "<info>%s</info>" item(s).', $bundleListCount));
 
-        if ( ! $bundleListCount) {
+        if (!$bundleListCount) {
             $this->output->writeln('No bundles to be processed.');
 
             return;
@@ -90,10 +89,10 @@ class ExportCommand extends AbstractCommand
     }
 
     /**
-     * Export a Bundle
+     * Export a Bundle.
      *
-     * @param \Symfony\Component\HttpKernel\Bundle\Bundle $bundle
-     * @param array $localeList
+     * @param Bundle $bundle
+     * @param array  $localeList
      */
     protected function exportBundle($bundle, $localeList)
     {
@@ -105,7 +104,7 @@ class ExportCommand extends AbstractCommand
 
         $this->output->writeln(sprintf('found "<info>%s</info>" item(s).', $entryListCount));
 
-        if ( ! $entryListCount) {
+        if (!$entryListCount) {
             $this->output->writeln('  No entries to be processed.');
 
             return;
@@ -121,11 +120,11 @@ class ExportCommand extends AbstractCommand
     }
 
     /**
-     * Export a Locale
+     * Export a Locale.
      *
-     * @param \Symfony\Component\HttpKernel\Bundle\Bundle $bundle
+     * @param Bundle $bundle
      * @param Locale $locale
-     * @param array $entryList
+     * @param array  $entryList
      */
     protected function exportLocale($bundle, $locale, $entryList)
     {
@@ -137,7 +136,7 @@ class ExportCommand extends AbstractCommand
 
         $this->output->writeln(sprintf('found "<info>%s</info>" item(s).', $translationListCount));
 
-        if ( ! $translationListCount) {
+        if (!$translationListCount) {
             $this->output->writeln('    No translations to be processed.');
 
             return;
@@ -156,11 +155,11 @@ class ExportCommand extends AbstractCommand
     }
 
     /**
-     * Export a Translation File list
+     * Export a Translation File list.
      *
-     * @param \Symfony\Component\HttpKernel\Bundle\Bundle $bundle
-     * @param Locale $locale
-     * @param \Doctrine\Common\Collections\ArrayCollection $translationFileList
+     * @param Bundle          $bundle
+     * @param Locale          $locale
+     * @param ArrayCollection $translationFileList
      */
     protected function exportTranslationFileList($bundle, $locale, ArrayCollection $translationFileList)
     {
@@ -177,7 +176,6 @@ class ExportCommand extends AbstractCommand
                 $catalogue->set($translation->getEntry()->getAlias(), $translation->getValue(), $translation->getEntry()->getFilename());
             }
 
-
             $writer->writeTranslations($catalogue, $translation->getEntry()->getFormat(), array('path' => dirname($filePath)));
 
             $this->output->writeln('<info>DONE</info>');
@@ -185,7 +183,7 @@ class ExportCommand extends AbstractCommand
     }
 
     /**
-     * Retrieve the list of Locales
+     * Retrieve the list of Locales.
      *
      * @param string $filterLocaleName
      *
@@ -207,7 +205,7 @@ class ExportCommand extends AbstractCommand
     }
 
     /**
-     * Retrieve the list of entries
+     * Retrieve the list of entries.
      *
      * @param string $bundleName
      * @param string $filterFileName
@@ -230,10 +228,10 @@ class ExportCommand extends AbstractCommand
     }
 
     /**
-     * Retrieve the list of translations
+     * Retrieve the list of translations.
      *
      * @param Locale $locale
-     * @param array $entryList
+     * @param array  $entryList
      *
      * @return array
      */
@@ -261,7 +259,7 @@ class ExportCommand extends AbstractCommand
     }
 
     /**
-     * Retrieve the Translations separated by files
+     * Retrieve the Translations separated by files.
      *
      * @param array $translationList
      *
@@ -274,7 +272,7 @@ class ExportCommand extends AbstractCommand
         foreach ($translationList as $translation) {
             $translationFileName = $translation->getEntry()->getFileName();
 
-            if ( ! isset($translationFileList[$translationFileName])) {
+            if (!isset($translationFileList[$translationFileName])) {
                 $translationFileList[$translationFileName] = new ArrayCollection();
             }
 

@@ -5,14 +5,14 @@ namespace ServerGrove\Bundle\TranslationEditorBundle\Model;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * Storage agnostic Locale entity
+ * Storage agnostic Locale entity.
  *
  * @author Guilherme Blanco <guilhermeblanco@hotmail.com>
  */
 class Locale implements LocaleInterface
 {
     /**
-     * @var integer
+     * @var int
      */
     protected $id;
 
@@ -27,7 +27,7 @@ class Locale implements LocaleInterface
     protected $country;
 
     /**
-     * @var boolean
+     * @var bool
      */
     protected $active;
 
@@ -37,8 +37,7 @@ class Locale implements LocaleInterface
     protected $translations;
 
     /**
-     * Constructor
-     *
+     * Constructor.
      */
     public function __construct()
     {
@@ -47,9 +46,9 @@ class Locale implements LocaleInterface
     }
 
     /**
-     * Retrieve Entry identifier
+     * Retrieve Entry identifier.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -109,7 +108,7 @@ class Locale implements LocaleInterface
      */
     public function addTranslation(TranslationInterface $translation)
     {
-        if ( ! $translation->getLocale() instanceof self) {
+        if (!$translation->getLocale() instanceof self) {
             $this->translations[] = $translation;
         }
     }
@@ -123,7 +122,7 @@ class Locale implements LocaleInterface
     }
 
     /**
-     * Retrieve a Translation of a given Entry
+     * Retrieve a Translation of a given Entry.
      *
      * @param Locale $locale
      *
@@ -137,7 +136,7 @@ class Locale implements LocaleInterface
             }
         }
 
-        return null;
+        return;
     }
 
     /**
@@ -146,7 +145,7 @@ class Locale implements LocaleInterface
      *
      * @param mixed $locale
      *
-     * @return boolean
+     * @return bool
      */
     public function equalsTo($locale)
     {
@@ -160,7 +159,7 @@ class Locale implements LocaleInterface
     }
 
     /**
-     * Convert Locale to string
+     * Convert Locale to string.
      *
      * @return string
      */
@@ -169,7 +168,7 @@ class Locale implements LocaleInterface
         $locale = $this->getLanguage();
 
         if (($country = $this->getCountry()) !== null) {
-            $locale .= '_' . $country;
+            $locale .= '_'.$country;
         }
 
         return $locale;

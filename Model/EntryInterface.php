@@ -3,91 +3,91 @@
 namespace ServerGrove\Bundle\TranslationEditorBundle\Model;
 
 /**
- * EntryInterface
+ * EntryInterface.
  *
  * @author Guilherme Blanco <guilhermeblanco@hotmail.com>
  */
 interface EntryInterface
 {
     /**
-     * Retrieve the Entry domain
+     * Retrieve the Entry domain.
      *
      * @return string
      */
     public function getDomain();
 
     /**
-     * Define the Entry domain
+     * Define the Entry domain.
      *
      * @param string $domain
      */
     public function setDomain($domain);
 
     /**
-     * Retrieve the Entry file name
+     * Retrieve the Entry file name.
      *
      * @return string
      */
     public function getFileName();
 
     /**
-     * Define the Entry file name
+     * Define the Entry file name.
      *
      * @param string $fileName
      */
     public function setFileName($fileName);
 
     /**
-     * Retrieve the Entry format
+     * Retrieve the Entry format.
      *
      * @return string
      */
     public function getFormat();
 
     /**
-     * Define the Entry format
+     * Define the Entry format.
      *
      * @param string $format
      */
     public function setFormat($format);
 
     /**
-     * Retrieve the Entry alias
+     * Retrieve the Entry alias.
      *
      * @return string
      */
     public function getAlias();
 
     /**
-     * Define the Entry alias
+     * Define the Entry alias.
      *
      * @param string $alias
      */
     public function setAlias($alias);
 
     /**
-     * Retrieve the Entry description
+     * Retrieve the Entry description.
      *
      * @return string
      */
     public function getDescription();
 
     /**
-     * Define the Entry description
+     * Define the Entry description.
      *
      * @param string $alias
      */
     public function setDescription($description);
 
     /**
-     * Append an Entry translation
+     * Append an Entry translation.
      *
      * @param TranslationInterface $translation
      */
     public function addTranslation(TranslationInterface $translation);
 
     /**
-     * Retrieve the Entry translations
+     * Retrieve the Entry translations.
      *
      * @return \Doctrine\Common\Collections\Collection
      */

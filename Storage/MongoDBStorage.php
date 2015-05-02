@@ -4,8 +4,9 @@ namespace ServerGrove\Bundle\TranslationEditorBundle\Storage;
 
 use ServerGrove\Bundle\TranslationEditorBundle\Model\Locale;
 use ServerGrove\Bundle\TranslationEditorBundle\Model\Entry;
+
 /**
- * Doctrine MongoDB Storage
+ * Doctrine MongoDB Storage.
  *
  * @author Ken Golovin <kengolovin@gmail.com>
  */
@@ -63,7 +64,7 @@ class MongoDBStorage extends AbstractStorage implements StorageInterface
     {
         $builder = $this->manager->createQueryBuilder($this->getEntryClassName());
 
-        if(isset($criteria['locale']) && $criteria['locale'] instanceof Locale) {
+        if (isset($criteria['locale']) && $criteria['locale'] instanceof Locale) {
             $builder->field('locale.$id')->equals(new \MongoId($criteria['locale']->getId()));
             unset($criteria['locale']);
         }
@@ -80,10 +81,10 @@ class MongoDBStorage extends AbstractStorage implements StorageInterface
     {
         $builder = $this->manager->createQueryBuilder($this->getTranslationClassName());
 
-        if(isset($criteria['locale']) && $criteria['locale'] instanceof Locale) {
+        if (isset($criteria['locale']) && $criteria['locale'] instanceof Locale) {
             $builder->field('locale.$id')->equals(new \MongoId($criteria['locale']->getId()));
         }
-        if(isset($criteria['entry']) && $criteria['entry'] instanceof Entry) {
+        if (isset($criteria['entry']) && $criteria['entry'] instanceof Entry) {
             $builder->field('entry.$id')->equals(new \MongoId($criteria['entry']->getId()));
         }
 
@@ -91,10 +92,10 @@ class MongoDBStorage extends AbstractStorage implements StorageInterface
     }
 
     /**
-     * Populate a criteria builder
+     * Populate a criteria builder.
      *
      * @param \Doctrine\ODM\MongoDB\Query\Builder $builder
-     * @param array $criteria
+     * @param array                               $criteria
      */
     protected function hydrateCriteria($builder, array $criteria = array())
     {

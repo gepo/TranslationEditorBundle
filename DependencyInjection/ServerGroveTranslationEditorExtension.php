@@ -23,24 +23,24 @@ class ServerGroveTranslationEditorExtension extends \Symfony\Component\HttpKerne
             throw new \LogicException('ServerGroveTranslationEditorBundle supports only `mongodb` and `orm` storage types');
         }
 
-        $loader->load($storageType . '.xml');
+        $loader->load($storageType.'.xml');
 
-        $container->setAlias($this->getAlias() . '.storage', 'server_grove_translation_editor.storage.' . $config['storage']['type']);
-        $container->setParameter('server_grove_translation_editor.storage.' . $config['storage']['type'] . '.enabled', true);
-        $container->setParameter($this->getAlias() . '.root_dir', $config['root_dir']);
-        $container->setParameter($this->getAlias() . '.override_translator', $config['override_translator']);
+        $container->setAlias($this->getAlias().'.storage', 'server_grove_translation_editor.storage.'.$config['storage']['type']);
+        $container->setParameter('server_grove_translation_editor.storage.'.$config['storage']['type'].'.enabled', true);
+        $container->setParameter($this->getAlias().'.root_dir', $config['root_dir']);
+        $container->setParameter($this->getAlias().'.override_translator', $config['override_translator']);
 
-        $container->setParameter($this->getAlias() . '.storage.manager_name', $config['storage']['manager']);
+        $container->setParameter($this->getAlias().'.storage.manager_name', $config['storage']['manager']);
         $this->{'set'.ucfirst($storageType).'Manager'}($container, $config);
     }
 
     private function setMongodbManager(ContainerBuilder $container, array $config)
     {
-        $container->setAlias($this->getAlias() . '.storage.manager', 'doctrine_mongodb.odm.'.$config['storage']['manager'].'_document_manager');
+        $container->setAlias($this->getAlias().'.storage.manager', 'doctrine_mongodb.odm.'.$config['storage']['manager'].'_document_manager');
     }
 
     private function setOrmManager(ContainerBuilder $container, array $config)
     {
-        $container->setAlias($this->getAlias() . '.storage.manager', 'doctrine.orm.'.$config['storage']['manager'].'_entity_manager');
+        $container->setAlias($this->getAlias().'.storage.manager', 'doctrine.orm.'.$config['storage']['manager'].'_entity_manager');
     }
 }

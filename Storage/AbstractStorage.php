@@ -6,7 +6,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 use ServerGrove\Bundle\TranslationEditorBundle\Model\TranslationInterface;
 
 /**
- * Doctrine ORM Storage
+ * Doctrine ORM Storage.
  *
  * @author Guilherme Blanco <guilhermeblanco@hotmail.com>
  */
@@ -18,7 +18,7 @@ abstract class AbstractStorage
     protected $manager;
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param \Doctrine\Common\Persistence\ObjectManager $manager
      */
@@ -33,7 +33,7 @@ abstract class AbstractStorage
     public function createLocale($language, $country = null)
     {
         $localeClass = $this->getLocaleClassName();
-        $locale      = new $localeClass;
+        $locale      = new $localeClass();
 
         $locale->setLanguage($language);
         $locale->setCountry($country);
@@ -48,7 +48,7 @@ abstract class AbstractStorage
     public function createEntry($domain, $fileName, $format, $alias)
     {
         $entryClass = $this->getEntryClassName();
-        $entry      = new $entryClass;
+        $entry      = new $entryClass();
 
         $entry->setDomain($domain);
         $entry->setFileName($fileName);
@@ -64,7 +64,7 @@ abstract class AbstractStorage
     public function createTranslation($locale, $entry, $value)
     {
         $translationClass = $this->getTranslationClassName();
-        $translation      = new $translationClass;
+        $translation      = new $translationClass();
 
         $translation->setLocale($locale);
         $translation->setEntry($entry);
@@ -134,9 +134,9 @@ abstract class AbstractStorage
      * Delete an entity based on its identifier.
      *
      * @param string $entityClassName
-     * @param integer $id
+     * @param int    $id
      *
-     * @return boolean
+     * @return bool
      */
     protected function delete($entityClassName, $id)
     {

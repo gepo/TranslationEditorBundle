@@ -3,49 +3,49 @@
 namespace ServerGrove\Bundle\TranslationEditorBundle\Model;
 
 /**
- * TranslationInterface
+ * TranslationInterface.
  *
  * @author Guilherme Blanco <guilhermeblanco@hotmail.com>
  */
 interface TranslationInterface
 {
     /**
-     * Retrieve the Translation entry
+     * Retrieve the Translation entry.
      *
      * @return EntryInterface
      */
     public function getEntry();
 
     /**
-     * Define the Translation entry
+     * Define the Translation entry.
      *
      * @param EntryInterface $entry
      */
     public function setEntry(EntryInterface $entry);
 
     /**
-     * Retrieve the Translation locale
+     * Retrieve the Translation locale.
      *
      * @return LocaleInterface
      */
     public function getLocale();
 
     /**
-     * Define the Translation locale
+     * Define the Translation locale.
      *
      * @param LocaleInterface $locale
      */
     public function setLocale(LocaleInterface $locale);
 
     /**
-     * Retrieve the Translation value
+     * Retrieve the Translation value.
      *
      * @return string
      */
     public function getValue();
 
     /**
-     * Define the Translation value
+     * Define the Translation value.
      *
      * @param string $value
      */

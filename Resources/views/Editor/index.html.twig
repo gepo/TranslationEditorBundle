@@ -19,7 +19,7 @@
         var $zebraStripedTable = $('.table-striped');
 
         $zebraStripedTable.find('tbody tr').hide();
-        
+
         // find alias
         var $rows = $zebraStripedTable.find('tbody tr td.alias:contains('+ val +')');
         $rows.parent('tr').show();
@@ -255,13 +255,13 @@
                 <label class="input-group-addon">File Name:</label>
                 <input type="text" id="fileName" name="fileName" class="form-control"/>
             </div>
-            <div class="form-group input-group">    
+            <div class="form-group input-group">
                 <label class="input-group-addon">Alias:</label>
                 <input type="text" id="alias" name="alias" class="form-control"/>
             </div>
 
             {% for locale in localeList %}
-            <div class="form-group input-group">    
+            <div class="form-group input-group">
                 <label class="input-group-addon">{{ locale }}:</label>
                 <textarea name="translations[{{ locale.getId() }}]" style="" class="form-control"></textarea>
             </div>

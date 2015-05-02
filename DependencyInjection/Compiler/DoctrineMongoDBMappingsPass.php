@@ -51,7 +51,6 @@ class DoctrineMongoDBMappingsPass extends RegisterMappingsPass
             $aliasMap
 
         );
-
     }
 
     /**
@@ -71,7 +70,7 @@ class DoctrineMongoDBMappingsPass extends RegisterMappingsPass
         $locator = new Definition('Doctrine\Common\Persistence\Mapping\Driver\SymfonyFileLocator', $arguments);
         $driver = new Definition('Doctrine\ODM\MongoDB\Mapping\Driver\XmlDriver', array($locator));
 
-        return new DoctrineMongoDBMappingsPass($driver, $mappings, $managerParameters, $enabledParameter, $aliasMap);
+        return new self($driver, $mappings, $managerParameters, $enabledParameter, $aliasMap);
     }
 
     /**
@@ -91,7 +90,7 @@ class DoctrineMongoDBMappingsPass extends RegisterMappingsPass
         $locator = new Definition('Doctrine\Common\Persistence\Mapping\Driver\SymfonyFileLocator', $arguments);
         $driver = new Definition('Doctrine\ODM\MongoDB\Mapping\Driver\YamlDriver', array($locator));
 
-        return new DoctrineMongoDBMappingsPass($driver, $mappings, $managerParameters, $enabledParameter, $aliasMap);
+        return new self($driver, $mappings, $managerParameters, $enabledParameter, $aliasMap);
     }
 
     /**
@@ -111,7 +110,7 @@ class DoctrineMongoDBMappingsPass extends RegisterMappingsPass
         $locator = new Definition('Doctrine\Common\Persistence\Mapping\Driver\SymfonyFileLocator', $arguments);
         $driver = new Definition('Doctrine\Common\Persistence\Mapping\Driver\PHPDriver', array($locator));
 
-        return new DoctrineMongoDBMappingsPass($driver, $mappings, $managerParameters, $enabledParameter, $aliasMap);
+        return new self($driver, $mappings, $managerParameters, $enabledParameter, $aliasMap);
     }
 
     /**
@@ -132,7 +131,7 @@ class DoctrineMongoDBMappingsPass extends RegisterMappingsPass
         $locator = new Definition('Doctrine\Common\Persistence\Mapping\Driver\SymfonyFileLocator', $arguments);
         $driver = new Definition('Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver', array($locator));
 
-        return new DoctrineMongoDBMappingsPass($driver, $namespaces, $managerParameters, $enabledParameter, $aliasMap);
+        return new self($driver, $namespaces, $managerParameters, $enabledParameter, $aliasMap);
     }
 
     /**
@@ -151,6 +150,6 @@ class DoctrineMongoDBMappingsPass extends RegisterMappingsPass
     {
         $driver = new Definition('Doctrine\Common\Persistence\Mapping\Driver\StaticPHPDriver', array($directories));
 
-        return new DoctrineMongoDBMappingsPass($driver, $namespaces, $managerParameters, $enabledParameter, $aliasMap);
+        return new self($driver, $namespaces, $managerParameters, $enabledParameter, $aliasMap);
     }
 }

@@ -2,17 +2,15 @@
 
 namespace ServerGrove\Bundle\TranslationEditorBundle\Model;
 
-use Doctrine\Common\Collections\ArrayCollection;
-
 /**
- * Storage agnostic Translation entity
+ * Storage agnostic Translation entity.
  *
  * @author Guilherme Blanco <guilhermeblanco@hotmail.com>
  */
 class Translation implements TranslationInterface
 {
     /**
-     * @var integer
+     * @var int
      */
     protected $id;
 
@@ -32,9 +30,9 @@ class Translation implements TranslationInterface
     protected $value;
 
     /**
-     * Retrieve Entry identifier
+     * Retrieve Entry identifier.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {

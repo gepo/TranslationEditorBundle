@@ -2,18 +2,18 @@
 
 namespace ServerGrove\Bundle\TranslationEditorBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller,
-    Symfony\Component\HttpFoundation\RedirectResponse,
-    Symfony\Component\HttpFoundation\Response,
-    Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
- * Editor Controller
+ * Editor Controller.
  */
 class EditorController extends Controller
 {
     /**
-     * Index action
+     * Index action.
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
@@ -22,16 +22,17 @@ class EditorController extends Controller
         $storageService = $this->container->get('server_grove_translation_editor.storage');
         $kernelService  = $this->container->get('kernel');
 
-        $sourcePath     = realpath($kernelService->getRootDir() . '/../src');
+        $sourcePath     = realpath($kernelService->getRootDir().'/../src');
         $kernelDefaultLocale  = $this->getRequest()->getLocale();
 
         // Retrieving mandatory information
         $localeList = $storageService->findLocaleList();
         $entryList  = $storageService->findEntryList();
-        usort($entryList, function($a, $b) {
+        usort($entryList, function ($a, $b) {
             if ($a->getAlias() < $b->getAlias()) {
                 return -1;
             }
+
             return 1;
         });
 
@@ -64,7 +65,7 @@ class EditorController extends Controller
     }
 
     /**
-     * Remove Translation action
+     * Remove Translation action.
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
@@ -73,7 +74,7 @@ class EditorController extends Controller
         $storageService = $this->container->get('server_grove_translation_editor.storage');
         $request        = $this->getRequest();
 
-        if ( ! $request->isXmlHttpRequest()) {
+        if (!$request->isXmlHttpRequest()) {
             return new RedirectResponse($this->generateUrl('sg_localeditor_index'));
         }
 
@@ -82,12 +83,12 @@ class EditorController extends Controller
             $status = $storageService->deleteEntry($id);
 
             $result = array(
-                'result' => $status
+                'result' => $status,
             );
         } catch (\Exception $e) {
             $result = array(
                 'result'  => false,
-                'message' => $e->getMessage()
+                'message' => $e->getMessage(),
             );
         }
 
@@ -95,7 +96,7 @@ class EditorController extends Controller
     }
 
     /**
-     * Add Translation action
+     * Add Translation action.
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
@@ -116,7 +117,7 @@ class EditorController extends Controller
         // Check for existent domain/alias
         $entryList =  $storageService->findEntryList(array(
             'domain' => $domain,
-            'alias'  => $alias
+            'alias'  => $alias,
         ));
 
         if (count($entryList)) {
@@ -144,20 +145,20 @@ class EditorController extends Controller
         $storageService->flush();
 
         // Return reponse according to request type
-        if ( ! $request->isXmlHttpRequest()) {
+        if (!$request->isXmlHttpRequest()) {
             return new RedirectResponse($this->generateUrl('sg_localeditor_index'));
         }
 
         $result = array(
             'result'  => true,
-            'message' => 'New translation added successfully. Reload list for completion.'
+            'message' => 'New translation added successfully. Reload list for completion.',
         );
 
         return new JsonResponse($result);
     }
 
     /**
-     * Update Translation action
+     * Update Translation action.
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
@@ -166,7 +167,7 @@ class EditorController extends Controller
         $storageService = $this->container->get('server_grove_translation_editor.storage');
         $request        = $this->getRequest();
 
-        if ( ! $request->isXmlHttpRequest()) {
+        if (!$request->isXmlHttpRequest()) {
             return new RedirectResponse($this->generateUrl('sg_localeditor_index'));
         }
 
@@ -194,12 +195,12 @@ class EditorController extends Controller
 
             $result = array(
                 'result'  => true,
-                'message' => 'Translation updated successfully.'
+                'message' => 'Translation updated successfully.',
             );
         } catch (\Exception $e) {
             $result = array(
                 'result'  => false,
-                'message' => $e->getMessage()
+                'message' => $e->getMessage(),
             );
         }
 
@@ -207,7 +208,7 @@ class EditorController extends Controller
     }
 
     /**
-     * Update Entry description
+     * Update Entry description.
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
@@ -216,7 +217,7 @@ class EditorController extends Controller
         $storageService = $this->container->get('server_grove_translation_editor.storage');
         $request        = $this->getRequest();
 
-        if ( ! $request->isXmlHttpRequest()) {
+        if (!$request->isXmlHttpRequest()) {
             return new RedirectResponse($this->generateUrl('sg_localeditor_index'));
         }
 
@@ -225,7 +226,7 @@ class EditorController extends Controller
         $entryList  = $storageService->findEntryList(array('id' => $request->request->get('entryId')));
         $entry      = reset($entryList);
 
-        if (! $entry) {
+        if (!$entry) {
             throw new $this->createNotFoundException();
         }
 
@@ -237,12 +238,12 @@ class EditorController extends Controller
 
             $result = array(
                 'result'  => true,
-                'message' => 'Description updated successfully.'
+                'message' => 'Description updated successfully.',
             );
         } catch (\Exception $e) {
             $result = array(
                 'result'  => false,
-                'message' => $e->getMessage()
+                'message' => $e->getMessage(),
             );
         }
 
@@ -250,7 +251,7 @@ class EditorController extends Controller
     }
 
     /**
-     * Remove Locale action
+     * Remove Locale action.
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
@@ -259,7 +260,7 @@ class EditorController extends Controller
         $storageService = $this->container->get('server_grove_translation_editor.storage');
         $request        = $this->getRequest();
 
-        if ( ! $request->isXmlHttpRequest()) {
+        if (!$request->isXmlHttpRequest()) {
             return new RedirectResponse($this->generateUrl('sg_localeditor_index'));
         }
 
@@ -268,12 +269,12 @@ class EditorController extends Controller
             $status = $storageService->deleteLocale($id);
 
             $result = array(
-                'result' => $status
+                'result' => $status,
             );
         } catch (\Exception $e) {
             $result = array(
                 'result'  => false,
-                'message' => $e->getMessage()
+                'message' => $e->getMessage(),
             );
         }
 
@@ -281,7 +282,7 @@ class EditorController extends Controller
     }
 
     /**
-     * Add Locale action
+     * Add Locale action.
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
@@ -296,7 +297,7 @@ class EditorController extends Controller
 
         try {
             // Check for country
-            $country = ( ! empty($country)) ? $country : null;
+            $country = (!empty($country)) ? $country : null;
 
             // Create new Locale
             $storageService->createLocale($language, $country);
@@ -305,17 +306,17 @@ class EditorController extends Controller
 
             $result = array(
                 'result'  => true,
-                'message' => 'New locale added successfully. Reload list for completion.'
+                'message' => 'New locale added successfully. Reload list for completion.',
             );
         } catch (\Exception $e) {
             $result = array(
                 'result'  => false,
-                'message' => $e->getMessage()
+                'message' => $e->getMessage(),
             );
         }
 
         // Return reponse according to request type
-        if ( ! $request->isXmlHttpRequest()) {
+        if (!$request->isXmlHttpRequest()) {
             return new RedirectResponse($this->generateUrl('sg_localeditor_index'));
         }
 

@@ -3,14 +3,14 @@
 namespace ServerGrove\Bundle\TranslationEditorBundle\Storage;
 
 /**
- * StorageInterface
+ * StorageInterface.
  *
  * @author Guilherme Blanco <guilhermeblanco@hotmail.com>
  */
 interface StorageInterface
 {
     /**
-     * Retrieve a list of Locales based on search criteria
+     * Retrieve a list of Locales based on search criteria.
      *
      * @param array $criteria
      *
@@ -29,16 +29,16 @@ interface StorageInterface
     public function createLocale($language, $country = null);
 
     /**
-     * Delete an existing Locale
+     * Delete an existing Locale.
      *
-     * @param integer $id
+     * @param int $id
      *
-     * @return boolean
+     * @return bool
      */
     public function deleteLocale($id);
 
     /**
-     * Retrieve a list of Entries based on search criteria
+     * Retrieve a list of Entries based on search criteria.
      *
      * @param array $criteria
      *
@@ -59,16 +59,16 @@ interface StorageInterface
     public function createEntry($domain, $fileName, $format, $alias);
 
     /**
-     * Delete an existing Entry
+     * Delete an existing Entry.
      *
-     * @param integer $id
+     * @param int $id
      *
-     * @return boolean
+     * @return bool
      */
     public function deleteEntry($id);
 
     /**
-     * Retrieve a list of Translations based on search criteria
+     * Retrieve a list of Translations based on search criteria.
      *
      * @param array $criteria
      *
@@ -80,24 +80,24 @@ interface StorageInterface
      * Create a new Translation.
      *
      * @param \ServerGrove\Bundle\TranslationEditorBundle\Model\LocaleInterface $locale
-     * @param \ServerGrove\Bundle\TranslationEditorBundle\Model\EntryInterface $entry
-     * @param string $value
+     * @param \ServerGrove\Bundle\TranslationEditorBundle\Model\EntryInterface  $entry
+     * @param string                                                            $value
      *
      * @return \ServerGrove\Bundle\TranslationEditorBundle\Model\TranslationInterface
      */
     public function createTranslation($locale, $entry, $value);
 
     /**
-     * Delete an existing Translation
+     * Delete an existing Translation.
      *
-     * @param integer $id
+     * @param int $id
      *
-     * @return boolean
+     * @return bool
      */
     public function deleteTranslation($id);
 
     /**
-     * Persist a given entity onstorage
+     * Persist a given entity onstorage.
      *
      * @param object $entity
      *
@@ -106,12 +106,12 @@ interface StorageInterface
     public function persist($entity);
 
     /**
-     * Flushes all persisted entities
+     * Flushes all persisted entities.
      */
     public function flush();
 
     /**
-     * Clear all managed entities in the object manager
+     * Clear all managed entities in the object manager.
      */
     public function clear();
 }

@@ -47,5 +47,4 @@ class ServerGroveTranslationEditorBundle extends Bundle
             ));
         }
     }
-
 }

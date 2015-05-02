@@ -3,7 +3,7 @@
 namespace ServerGrove\Bundle\TranslationEditorBundle\Storage;
 
 /**
- * Doctrine ORM Storage
+ * Doctrine ORM Storage.
  *
  * @author Guilherme Blanco <guilhermeblanco@hotmail.com>
  */
@@ -86,10 +86,10 @@ class ORMStorage extends AbstractStorage implements StorageInterface
     }
 
     /**
-     * Populate a criteria builder
+     * Populate a criteria builder.
      *
      * @param \Doctrine\ORM\QueryBuilder $builder
-     * @param array $criteria
+     * @param array                      $criteria
      */
     protected function hydrateCriteria($builder, array $criteria = array())
     {

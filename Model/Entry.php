@@ -5,14 +5,14 @@ namespace ServerGrove\Bundle\TranslationEditorBundle\Model;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * Storage agnostic Entry entity
+ * Storage agnostic Entry entity.
  *
  * @author Guilherme Blanco <guilhermeblanco@hotmail.com>
  */
 class Entry implements EntryInterface
 {
     /**
-     * @var integer
+     * @var int
      */
     protected $id;
 
@@ -47,8 +47,7 @@ class Entry implements EntryInterface
     protected $translations;
 
     /**
-     * Constructor
-     *
+     * Constructor.
      */
     public function __construct()
     {
@@ -56,9 +55,9 @@ class Entry implements EntryInterface
     }
 
     /**
-     * Retrieve Entry identifier
+     * Retrieve Entry identifier.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -143,15 +142,16 @@ class Entry implements EntryInterface
     public function setDescription($description)
     {
         $this->description = $description;
+
         return $this;
     }
 
-        /**
+    /**
      * {@inheritdoc}
      */
     public function addTranslation(TranslationInterface $translation)
     {
-        if ( ! $translation->getEntry() instanceof self) {
+        if (!$translation->getEntry() instanceof self) {
             $this->translations[] = $translation;
         }
     }
@@ -165,7 +165,7 @@ class Entry implements EntryInterface
     }
 
     /**
-     * Retrieve a Translation of a given Locale
+     * Retrieve a Translation of a given Locale.
      *
      * @param Locale $locale
      *
@@ -179,6 +179,6 @@ class Entry implements EntryInterface
             }
         }
 
-        return null;
+        return;
     }
 }

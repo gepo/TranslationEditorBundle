@@ -3,63 +3,63 @@
 namespace ServerGrove\Bundle\TranslationEditorBundle\Model;
 
 /**
- * LocaleInterface
+ * LocaleInterface.
  *
  * @author Guilherme Blanco <guilhermeblanco@hotmail.com>
  */
 interface LocaleInterface
 {
     /**
-     * Retrieve the ISO639-1 language code
+     * Retrieve the ISO639-1 language code.
      *
      * @return string
      */
     public function getLanguage();
 
     /**
-     * Define the Locale language code
+     * Define the Locale language code.
      *
      * @param string $language
      */
     public function setLanguage($language);
 
     /**
-     * Retrieve the ISO3166 country code
+     * Retrieve the ISO3166 country code.
      *
      * @return string
      */
     public function getCountry();
 
     /**
-     * Define the Locale country code (optional)
+     * Define the Locale country code (optional).
      *
      * @param string $country
      */
     public function setCountry($country = null);
 
     /**
-     * Retrieve the Locale active status
+     * Retrieve the Locale active status.
      *
-     * @return boolean
+     * @return bool
      */
     public function getActive();
 
     /**
-     * Define the Locale active status
+     * Define the Locale active status.
      *
-     * @param boolean $active
+     * @param bool $active
      */
     public function setActive($active);
 
     /**
-     * Append a Locale translation
+     * Append a Locale translation.
      *
      * @param TranslationInterface $translation
      */
     public function addTranslation(TranslationInterface $translation);
 
     /**
-     * Retrieve the Locale translations
+     * Retrieve the Locale translations.
      *
      * @return \Doctrine\Common\Collections\Collection
      */

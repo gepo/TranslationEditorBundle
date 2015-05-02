@@ -2,11 +2,10 @@
 
 namespace ServerGrove\Bundle\TranslationEditorBundle\Command;
 
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand,
-    Symfony\Component\Finder\Finder;
+use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 
 /**
- * AbstractCommand
+ * AbstractCommand.
  *
  * @author Guilherme Blanco <guilhermeblanco@hotmail.com>
  */
@@ -28,7 +27,7 @@ abstract class AbstractCommand extends ContainerAwareCommand
     protected $output;
 
     /**
-     * Retrieve the list of registered Bundles
+     * Retrieve the list of registered Bundles.
      *
      * @param string $filterBundleName
      *
@@ -56,7 +55,7 @@ abstract class AbstractCommand extends ContainerAwareCommand
     }
 
     /**
-     * Extract file information
+     * Extract file information.
      *
      * @param string $fileName
      *
@@ -75,7 +74,7 @@ abstract class AbstractCommand extends ContainerAwareCommand
     }
 
     /**
-     * Extract locale information
+     * Extract locale information.
      *
      * @param string $locale
      *
