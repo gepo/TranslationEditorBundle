@@ -12,14 +12,9 @@ use ServerGrove\Bundle\TranslationEditorBundle\Model\Entry;
  */
 class MongoDBStorage extends AbstractStorage implements StorageInterface
 {
-    const CLASS_LOCALE      = 'ServerGroveBundleTranslationEditorBundle:Locale';
-    const CLASS_ENTRY       = 'ServerGroveBundleTranslationEditorBundle:Entry';
-    const CLASS_TRANSLATION = 'ServerGroveBundleTranslationEditorBundle:Translation';
-    /*
     const CLASS_LOCALE      = 'ServerGrove\Bundle\TranslationEditorBundle\Model\Locale';
     const CLASS_ENTRY       = 'ServerGrove\Bundle\TranslationEditorBundle\Model\Entry';
     const CLASS_TRANSLATION = 'ServerGrove\Bundle\TranslationEditorBundle\Model\Translation';
-     */
 
     /**
      * {@inheritdoc}
