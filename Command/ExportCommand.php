@@ -176,7 +176,15 @@ class ExportCommand extends AbstractCommand
                 $catalogue->set($translation->getEntry()->getAlias(), $translation->getValue(), $translation->getEntry()->getFilename());
             }
 
-            $writer->writeTranslations($catalogue, $translation->getEntry()->getFormat(), array('path' => dirname($filePath)));
+            $writer->writeTranslations(
+                $catalogue,
+                $translation->getEntry()->getFormat(),
+                array(
+                    'path' => dirname($filePath),
+                    'as_tree' => true,
+                    'json_options' => JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE,
+                )
+            );
 
             $this->output->writeln('<info>DONE</info>');
         }
