@@ -62,20 +62,26 @@ class EditorController extends Controller
                 }
 
                 if (!empty($filterLocale['ru_RU']) || !empty($filterLocale['en_US'])) {
+                    $trans = [];
+
                     foreach ($entry->getTranslations() as $t) {
                         /* @var $t Translation */
                         if ($t->getLocale()->getLanguage() === 'en') {
-                            if (!empty($filterLocale['en_US'])) {
-                                if (! preg_match('/'.preg_quote($filterLocale['en_US']).'/i', $t->getValue())) {
-                                    return false;
-                                }
-                            }
+                            $trans['en_US'] = $t;
                         } elseif ($t->getLocale()->getLanguage() === 'ru') {
-                            if (!empty($filterLocale['ru_RU'])) {
-                                if (! preg_match('/'.preg_quote($filterLocale['ru_RU']).'/i', $t->getValue())) {
-                                    return false;
-                                }
-                            }
+                            $trans['ru_RU'] = $t;
+                        }
+                    }
+
+                    if (!empty($filterLocale['en_US'])) {
+                        if (empty($trans['en_US']) || ! preg_match('/'.preg_quote($filterLocale['en_US']).'/i', $trans['en_US']->getValue())) {
+                            return false;
+                        }
+                    }
+
+                    if (!empty($filterLocale['ru_RU'])) {
+                        if (empty($trans['ru_RU']) || ! preg_match('/'.preg_quote($filterLocale['ru_RU']).'/i', $trans['ru_RU']->getValue())) {
+                            return false;
                         }
                     }
                 }
