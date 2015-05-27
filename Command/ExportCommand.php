@@ -182,6 +182,7 @@ class ExportCommand extends AbstractCommand
                 array(
                     'path' => dirname($filePath),
                     'as_tree' => true,
+                    'inline' => 999,
                     'json_options' => JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE,
                 )
             );
