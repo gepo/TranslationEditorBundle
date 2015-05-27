@@ -11,6 +11,7 @@ class TranslatorPass implements CompilerPassInterface
     {
         if ($container->getParameter('server_grove_translation_editor.override_translator')) {
             $container->setAlias('translator', 'server_grove_translation_editor.translator');
+            $container->setAlias('translator.default', 'server_grove_translation_editor.translator');
         }
     }
 }

@@ -3,9 +3,12 @@
 namespace ServerGrove\Bundle\TranslationEditorBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use ServerGrove\Bundle\TranslationEditorBundle\Model\Entry;
+use ServerGrove\Bundle\TranslationEditorBundle\Model\Translation;
 
 /**
  * Editor Controller.
@@ -19,6 +22,14 @@ class EditorController extends Controller
      */
     public function indexAction()
     {
+        /* @var $request Request */
+        $request = $this->get('request_stack')->getCurrentRequest();
+        $filterBundle = $request->query->get('_bundle');
+        $filterDomain = $request->query->get('_domain');
+        $filterAlias  = $request->query->get('_alias');
+        $filterLocale['ru_RU'] = $request->query->get('_locale_ru_RU');
+        $filterLocale['en_US'] = $request->query->get('_locale_en_US');
+
         $storageService = $this->container->get('server_grove_translation_editor.storage');
         $kernelService  = $this->container->get('kernel');
 
@@ -28,6 +39,51 @@ class EditorController extends Controller
         // Retrieving mandatory information
         $localeList = $storageService->findLocaleList();
         $entryList  = $storageService->findEntryList();
+
+        $entryList = array_filter(
+            $entryList,
+            function ($entry) use ($filterBundle, $filterDomain, $filterAlias, $filterLocale) {
+                /* @var $entry Entry */
+                if (!empty($filterBundle)) {
+                    $bundle = str_replace(['AppDaddy', 'Bundle'], '', $entry->getDomain());
+                    if (! preg_match('/'.preg_quote($filterBundle).'/i', $bundle)) {
+                        return false;
+                    }
+                }
+                if (!empty($filterDomain)) {
+                    if (! preg_match('/'.preg_quote($filterDomain).'/i', $entry->getFileName())) {
+                        return false;
+                    }
+                }
+                if (!empty($filterAlias)) {
+                    if (! preg_match('/'.preg_quote($filterAlias).'/i', $entry->getAlias())) {
+                        return false;
+                    }
+                }
+
+                if (!empty($filterLocale['ru_RU']) || !empty($filterLocale['en_US'])) {
+                    foreach ($entry->getTranslations() as $t) {
+                        /* @var $t Translation */
+                        if ($t->getLocale()->getLanguage() === 'en') {
+                            if (!empty($filterLocale['en_US'])) {
+                                if (! preg_match('/'.preg_quote($filterLocale['en_US']).'/i', $t->getValue())) {
+                                    return false;
+                                }
+                            }
+                        } elseif ($t->getLocale()->getLanguage() === 'ru') {
+                            if (!empty($filterLocale['ru_RU'])) {
+                                if (! preg_match('/'.preg_quote($filterLocale['ru_RU']).'/i', $t->getValue())) {
+                                    return false;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                return true;
+            }
+        );
+
         usort($entryList, function ($a, $b) {
             if ($a->getAlias() < $b->getAlias()) {
                 return -1;
@@ -60,6 +116,11 @@ class EditorController extends Controller
                 'localeList'    => $localeList,
                 'entryList'     => $entryList,
                 'defaultLocale' => $defaultLocale,
+
+                'filterBundle' => $filterBundle,
+                'filterDomain' => $filterDomain,
+                'filterAlias'  => $filterAlias,
+                'filterLocale' => $filterLocale,
             )
         );
     }
