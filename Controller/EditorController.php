@@ -27,8 +27,7 @@ class EditorController extends Controller
         $filterBundle = $request->query->get('_bundle');
         $filterDomain = $request->query->get('_domain');
         $filterAlias  = $request->query->get('_alias');
-        $filterLocale['ru_RU'] = $request->query->get('_locale_ru_RU');
-        $filterLocale['en_US'] = $request->query->get('_locale_en_US');
+        $filterLocale = $request->query->get('_locale') ?: [];
 
         $storageService = $this->container->get('server_grove_translation_editor.storage');
         $kernelService  = $this->container->get('kernel');
@@ -61,28 +60,20 @@ class EditorController extends Controller
                     }
                 }
 
-                if (!empty($filterLocale['ru_RU']) || !empty($filterLocale['en_US'])) {
-                    $trans = [];
+                $trans = [];
 
-                    foreach ($entry->getTranslations() as $t) {
-                        /* @var $t Translation */
-                        if ($t->getLocale()->getLanguage() === 'en') {
-                            $trans['en_US'] = $t;
-                        } elseif ($t->getLocale()->getLanguage() === 'ru') {
-                            $trans['ru_RU'] = $t;
-                        }
+                foreach ($entry->getTranslations() as $t) {
+                    /* @var $t Translation */
+                    $trans[$t->getLocale()->getLanguage().'_'.$t->getLocale()->getCountry()] = $t;
+                }
+
+                foreach ($filterLocale as $locale => $filterLocaleValue) {
+                    if (empty($filterLocale[$locale])) {
+                        continue;
                     }
 
-                    if (!empty($filterLocale['en_US'])) {
-                        if (empty($trans['en_US']) || ! preg_match('/'.preg_quote($filterLocale['en_US']).'/i', $trans['en_US']->getValue())) {
-                            return false;
-                        }
-                    }
-
-                    if (!empty($filterLocale['ru_RU'])) {
-                        if (empty($trans['ru_RU']) || ! preg_match('/'.preg_quote($filterLocale['ru_RU']).'/i', $trans['ru_RU']->getValue())) {
-                            return false;
-                        }
+                    if (empty($trans[$locale]) || ! preg_match('/'.preg_quote($filterLocaleValue).'/i', $trans[$locale]->getValue())) {
+                        return false;
                     }
                 }
 
