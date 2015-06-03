@@ -13,11 +13,13 @@ class Translator extends BaseTranslator
 {
     private $storage;
     private $locales = array();
+    private $selector;
 
     public function __construct(StorageInterface $storage, MessageSelector $selector, $loaderIds = array(), array $options = array())
     {
         parent::__construct('en_US', $selector, $loaderIds, $options);
 
+        $this->selector = $selector;
         $this->storage = $storage;
         $this->initialize();
     }
