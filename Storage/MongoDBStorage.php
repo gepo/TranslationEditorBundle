@@ -45,7 +45,7 @@ class MongoDBStorage extends AbstractStorage implements StorageInterface
      */
     public function findLocaleList(array $criteria = array())
     {
-        $builder = $this->manager->createQueryBuilder($this->getLocaleClassName());
+        $builder = $this->manager->createQueryBuilder($this->getLocaleClassName())->sort('language', 'asc');
 
         $this->hydrateCriteria($builder, $criteria);
 
@@ -57,7 +57,7 @@ class MongoDBStorage extends AbstractStorage implements StorageInterface
      */
     public function findEntryList(array $criteria = array())
     {
-        $builder = $this->manager->createQueryBuilder($this->getEntryClassName());
+        $builder = $this->manager->createQueryBuilder($this->getEntryClassName())->sort('alias', 'asc');
 
         if (isset($criteria['locale']) && $criteria['locale'] instanceof Locale) {
             $builder->field('locale.$id')->equals(new \MongoId($criteria['locale']->getId()));
