@@ -15,13 +15,14 @@ class Translator extends BaseTranslator
     private $locales = array();
     private $selector;
 
+    private $initialized = false;
+
     public function __construct(StorageInterface $storage, MessageSelector $selector, $loaderIds = array(), array $options = array())
     {
         parent::__construct('en_US', $selector, $loaderIds, $options);
 
         $this->selector = $selector;
         $this->storage = $storage;
-        $this->initialize();
     }
 
     private function initialize()
@@ -41,6 +42,8 @@ class Translator extends BaseTranslator
      */
     public function trans($id, array $parameters = array(), $domain = null, $locale = null)
     {
+        $this->initialized ?: $this->initialize();
+
         if (null === $locale) {
             $locale = $this->getLocale();
         } else {
@@ -83,6 +86,8 @@ class Translator extends BaseTranslator
      */
     public function transChoice($id, $number, array $parameters = array(), $domain = null, $locale = null)
     {
+        $this->initialized ?: $this->initialize();
+
         if (null === $locale) {
             $locale = $this->getLocale();
         } else {
@@ -132,6 +137,8 @@ class Translator extends BaseTranslator
 
     public function getCatalogue($locale = null)
     {
+        $this->initialized ?: $this->initialize();
+        
         if (null === $locale) {
             $locale = $this->getLocale();
         }

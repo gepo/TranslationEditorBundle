@@ -32,6 +32,11 @@ class ServerGroveTranslationEditorExtension extends \Symfony\Component\HttpKerne
 
         $container->setParameter($this->getAlias().'.storage.manager_name', $config['storage']['manager']);
         $this->{'set'.ucfirst($storageType).'Manager'}($container, $config);
+
+        if ($container->getParameter('server_grove_translation_editor.override_translator')) {
+            $container->setAlias('translator', 'server_grove_translation_editor.translator');
+            $container->setAlias('translator.default', 'server_grove_translation_editor.translator');
+        }
     }
 
     private function setMongodbManager(ContainerBuilder $container, array $config)
