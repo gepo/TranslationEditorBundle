@@ -27,7 +27,7 @@ class Translator extends BaseTranslator
 
     private function initialize()
     {
-        $this->locale = [];
+        $this->locales = [];
 
         foreach ($this->storage->findLocaleList() as $locale) {
             /* @var $locale LocaleInterface */
@@ -138,7 +138,7 @@ class Translator extends BaseTranslator
     public function getCatalogue($locale = null)
     {
         $this->initialized ?: $this->initialize();
-        
+
         if (null === $locale) {
             $locale = $this->getLocale();
         }
