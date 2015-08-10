@@ -12,8 +12,6 @@ class ServerGroveTranslationEditorExtension extends \Symfony\Component\HttpKerne
     {
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
 
-        $loader->load('services.xml');
-
         $configuration = new Configuration();
         $config        = $this->processConfiguration($configuration, $configs);
 
@@ -31,21 +29,14 @@ class ServerGroveTranslationEditorExtension extends \Symfony\Component\HttpKerne
         $container->setParameter($this->getAlias().'.override_translator', $config['override_translator']);
 
         $container->setParameter($this->getAlias().'.storage.manager_name', $config['storage']['manager']);
-        $this->{'set'.ucfirst($storageType).'Manager'}($container, $config);
 
-        if ($container->getParameter('server_grove_translation_editor.override_translator')) {
-            $container->setAlias('translator', 'server_grove_translation_editor.translator');
-            $container->setAlias('translator.default', 'server_grove_translation_editor.translator');
+        switch ($storageType) {
+            case 'mongodb':
+                $container->setAlias($this->getAlias().'.storage.manager', 'doctrine_mongodb.odm.'.$config['storage']['manager'].'_document_manager');
+                break;
+            case 'orm':
+                $container->setAlias($this->getAlias().'.storage.manager', 'doctrine.orm.'.$config['storage']['manager'].'_entity_manager');
+                break;
         }
-    }
-
-    private function setMongodbManager(ContainerBuilder $container, array $config)
-    {
-        $container->setAlias($this->getAlias().'.storage.manager', 'doctrine_mongodb.odm.'.$config['storage']['manager'].'_document_manager');
-    }
-
-    private function setOrmManager(ContainerBuilder $container, array $config)
-    {
-        $container->setAlias($this->getAlias().'.storage.manager', 'doctrine.orm.'.$config['storage']['manager'].'_entity_manager');
     }
 }

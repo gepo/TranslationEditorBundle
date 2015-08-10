@@ -2,9 +2,11 @@
 
 namespace ServerGrove\Bundle\TranslationEditorBundle\Translation;
 
-use Symfony\Component\Translation\Translator as BaseTranslator;
+use Symfony\Bundle\FrameworkBundle\Translation\Translator as BaseTranslator;
+//use Symfony\Component\Translation\Translator as BaseTranslator;
 use Symfony\Component\Translation\MessageSelector;
 use Symfony\Component\Translation\MessageCatalogue;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use ServerGrove\Bundle\TranslationEditorBundle\Storage\StorageInterface;
 use ServerGrove\Bundle\TranslationEditorBundle\Model\LocaleInterface;
 use ServerGrove\Bundle\TranslationEditorBundle\Model\TranslationInterface;
@@ -17,15 +19,20 @@ class Translator extends BaseTranslator
 
     private $initialized = false;
 
-    public function __construct(StorageInterface $storage, MessageSelector $selector, $loaderIds = array(), array $options = array())
+    public function __construct(/*ContainerInterface $container, StorageInterface $storage,*/ $locale, MessageSelector $selector, $loaderIds = array(), array $options = array())
     {
-        parent::__construct('en_US', $selector, $loaderIds, $options);
+        parent::__construct($locale, $selector, $loaderIds, $options);
 
         $this->selector = $selector;
+//        $this->storage = $storage;
+    }
+
+    public function setStorage(StorageInterface $storage)
+    {
         $this->storage = $storage;
     }
 
-    private function initialize()
+    private function initializePreload()
     {
         $this->locales = [];
 
@@ -33,6 +40,8 @@ class Translator extends BaseTranslator
             /* @var $locale LocaleInterface */
             $this->locales[$locale->getLanguage().'_'.$locale->getCountry()] = $locale;
         }
+
+        $this->initialize();
     }
 
     /**
@@ -42,7 +51,7 @@ class Translator extends BaseTranslator
      */
     public function trans($id, array $parameters = array(), $domain = null, $locale = null)
     {
-        $this->initialized ?: $this->initialize();
+        $this->initialized ?: $this->initializePreload();
 
         if (null === $locale) {
             $locale = $this->getLocale();
@@ -86,7 +95,7 @@ class Translator extends BaseTranslator
      */
     public function transChoice($id, $number, array $parameters = array(), $domain = null, $locale = null)
     {
-        $this->initialized ?: $this->initialize();
+        $this->initialized ?: $this->initializePreload();
 
         if (null === $locale) {
             $locale = $this->getLocale();
@@ -137,7 +146,7 @@ class Translator extends BaseTranslator
 
     public function getCatalogue($locale = null)
     {
-        $this->initialized ?: $this->initialize();
+        $this->initialized ?: $this->initializePreload();
 
         if (null === $locale) {
             $locale = $this->getLocale();
@@ -161,6 +170,8 @@ class Translator extends BaseTranslator
 
     protected function initializeCatalogue($locale)
     {
+        $this->initialize();
+
         $this->assertValidLocale($locale);
 
         try {
@@ -175,6 +186,10 @@ class Translator extends BaseTranslator
 
     private function doLoadCatalogue($locale)
     {
+        if (! isset($this->locales[$locale])) {
+            return;
+        }
+        
         /* @var $catelogue MessageCatalogue */
         $this->catalogues[$locale] = $catelogue = new MessageCatalogue($locale);
 

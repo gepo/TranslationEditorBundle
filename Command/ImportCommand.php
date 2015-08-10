@@ -92,6 +92,8 @@ class ImportCommand extends AbstractCommand
             return;
         }
 
+        $this->getContainer()->get('translator')->getCatalogue('en_US');
+
         // Importing files
         foreach ($translationFileList as $translationFilePath => $propertyList) {
             $this->output->write(sprintf('  Processing "<info>%s</info>"... ', basename($translationFilePath)));
